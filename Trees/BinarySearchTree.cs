@@ -8,11 +8,10 @@ namespace Trees
 {
     public class BinarySearchTree
     {
-        List<int> input = new List<int>();
-        Node head = null;
-        public BinarySearchTree(List<int> Input)
+        public Node head = null;
+
+        public BinarySearchTree()
         {
-            input = Input;
         }
         public Node Search(int find, Node start)
         {
@@ -29,34 +28,50 @@ namespace Trees
             {
                 if (find < search.item)
                 {
-                    Search(find, search.left);
+                    return Search(find, search.left);
                 }
                 else
                 {
-                    Search(find, search.right);
+                    return Search(find, search.right);
                 }
             }
             return null;
         }
-        public void Insert(Node newNode, Node start)
+        public void Insert(Node newNode, Node start, Node parent)
         {
+            if (head == null)
+            {
+                head = newNode;
+                return;
+            }
             Node search = start;
             if (search == null)
             {
                 search = newNode;
+                search.parent = parent;
+                if (IsLeftChild(search))
+                {
+                    search.parent.left = search;
+                }
+                else
+                {
+                    search.parent.right = search;
+                }
+                return;
             }
             if (newNode.item < search.item)
             {
-                Insert(newNode, search.left);
+                Insert(newNode, search.left, search);
             }
             else
             {
-                Insert(newNode, search.right);
+                Insert(newNode, search.right, search);
             }
         }
         public void Delete(Node delNode)
         {
             Node target = Search(delNode.item, head);
+            Node find = target;
             if (target.left == null && target.right == null)
             {
                 if (target.parent.right.item == target.item)
@@ -68,9 +83,9 @@ namespace Trees
                     target.parent.left = null;
                 }
             }
-            if (!(target.left == null ^ target.right == null))
+            else if (target.left == null ^ target.right == null)
             {
-                if (target.parent.right.item == target.item)
+                if (!IsLeftChild(target))
                 {
                     if (target.left == null)
                     {
@@ -81,7 +96,7 @@ namespace Trees
                         target.parent.right = target.parent.right.left;
                     }
                 }
-                if (target.parent.left.item == target.item)
+                if (IsLeftChild(target))
                 {
                     if (target.left == null)
                     {
@@ -93,10 +108,50 @@ namespace Trees
                     }
                 }
             }
-            if (target.left != null && target.right != null)
+            else if (target.left != null && target.right != null)
             {
-
+                find = target.left;
+                while (find.right != null)
+                {
+                    find = find.right;
+                }
+                target = find;
+                Delete(find);
             }
+        }
+        public bool IsEmpty()
+        {
+            if (head == null)
+            {
+                return true;
+            }
+            return false;
+        }
+        public int Maximum()
+        {
+            var find = head;
+            while(find.right != null)
+            {
+                find = find.right;
+            }
+            return find.item;
+        }
+        public int Minimum()
+        {
+            var find = head;
+            while (find.left != null)
+            {
+                find = find.left;
+            }
+            return find.item;
+        }
+        public bool IsLeftChild(Node child)
+        {
+            if (child.item < child.parent.item)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
