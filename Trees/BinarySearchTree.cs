@@ -20,13 +20,13 @@ namespace Trees
             {
                 return null;
             }
-            if (find == search.item)
+            if (find == search.item && search.ignore == false)
             {
                 return search;
             }
             else
             {
-                if (find < search.item)
+                if (find <= search.item)
                 {
                     return Search(find, search.left);
                 }
@@ -35,7 +35,6 @@ namespace Trees
                     return Search(find, search.right);
                 }
             }
-            return null;
         }
         public void Insert(Node newNode, Node start, Node parent)
         {
@@ -74,11 +73,11 @@ namespace Trees
             Node find = target;
             if (target.left == null && target.right == null)
             {
-                if (target.parent.right.item == target.item)
+                if (!IsLeftChild(target))
                 {
                     target.parent.right = null;
                 }
-                else if (target.parent.left.item == target.item)
+                else if (IsLeftChild(target))
                 {
                     target.parent.left = null;
                 }
@@ -89,10 +88,12 @@ namespace Trees
                 {
                     if (target.left == null)
                     {
+                        target.right.parent = target.parent;
                         target.parent.right = target.parent.right.right;
                     }
                     if (target.right == null)
                     {
+                        target.left.parent = target.parent;
                         target.parent.right = target.parent.right.left;
                     }
                 }
@@ -100,10 +101,12 @@ namespace Trees
                 {
                     if (target.left == null)
                     {
+                        target.right.parent = target.parent;
                         target.parent.left = target.parent.left.right;
                     }
                     if (target.right == null)
                     {
+                        target.left.parent = target.parent;
                         target.parent.left = target.parent.left.left;
                     }
                 }
@@ -115,8 +118,17 @@ namespace Trees
                 {
                     find = find.right;
                 }
-                target = find;
+                target.left.parent.item = find.item;
+                target.left.parent.ignore = true;
                 Delete(find);
+                if (IsLeftChild(target))
+                {
+                    target.parent.left.ignore = false;
+                }
+                else
+                {
+                    target.parent.right.ignore = false;
+                }
             }
         }
         public bool IsEmpty()

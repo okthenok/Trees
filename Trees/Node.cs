@@ -8,13 +8,15 @@ namespace Trees
 {
     public class Node
     {
-        public int item { get; }
+        public int item { get; set; }
+        public bool ignore { get; set; }
         public Node parent { get; set; }
         public Node left { get; set; }
         public Node right { get; set; }
         public Node(int Item)
         {
             item = Item;
+            ignore = false;
         }
     }
 }

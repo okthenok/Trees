@@ -32,6 +32,11 @@ namespace Trees
                     tree.Search(numInput, tree.head);
                     continue;
                 }
+                if (input.Contains("isempty"))
+                {
+                    Console.WriteLine(tree.IsEmpty());
+                    continue;
+                }
                 node = new Node(Convert.ToInt32(input));
                 tree.Insert(node, tree.head, null);
             }
