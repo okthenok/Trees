@@ -118,17 +118,10 @@ namespace Trees
                 {
                     find = find.right;
                 }
-                target.left.parent.item = find.item;
-                target.left.parent.ignore = true;
+                target.item = find.item;
+                target.ignore = true;
                 Delete(find);
-                if (IsLeftChild(target))
-                {
-                    target.parent.left.ignore = false;
-                }
-                else
-                {
-                    target.parent.right.ignore = false;
-                }
+                target.ignore = false;
             }
         }
         public bool IsEmpty()
@@ -159,7 +152,7 @@ namespace Trees
         }
         public bool IsLeftChild(Node child)
         {
-            if (child.item < child.parent.item)
+            if (child.item <= child.parent.item)
             {
                 return true;
             }
