@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AVLSearchTree.cs" />
     <Compile Include="BinarySearchTree.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />

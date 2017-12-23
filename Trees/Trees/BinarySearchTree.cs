@@ -13,7 +13,7 @@ namespace Trees
         public BinarySearchTree()
         {
         }
-        public virtual Node Search(int find, Node start)
+        public Node Search(int find, Node start)
         {
             Node search = start;
             if (search == null)
@@ -36,7 +36,7 @@ namespace Trees
                 }
             }
         }
-        public virtual void Insert(Node newNode, Node start, Node parent)
+        public void Insert(Node newNode, Node start, Node parent)
         {
             if (head == null)
             {
@@ -61,7 +61,6 @@ namespace Trees
             if (newNode.item < search.item)
             {
                 Insert(newNode, search.left, search);
-
             }
             else
             {

@@ -1,0 +1,33 @@
+Bash Commands:
+ls
+cd [directory] (. .. / ~)
+clear
+touch
+rm
+rm -r
+mkdir
+
+Git Commands:
+git init
+git status
+git add .
+git add -a
+git add [file/folder]
+git commit -m "my message"
+git log
+git config --local user.name "name"
+git config --local user.email "email"
+
+Git Online:
+git remote add origin [http address here]
+git push origin master
+git clone [web address]
+git pull
+
+Future Stuff:
+.gitignore
+README
+Branching
+Merging
+MergeConflicts
+Git Teamwork

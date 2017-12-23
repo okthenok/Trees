@@ -12,6 +12,3 @@ C:\Users\Lumastars3\Documents\GitHub\Trees\Trees\obj\Debug\Trees.pdb
 C:\Users\Lumastars3\Documents\GitHub\Trees\Trees\bin\Debug\Trees.exe
 C:\Users\Lumastars3\Documents\GitHub\Trees\Trees\bin\Debug\Trees.pdb
 C:\Users\Lumastars3\Documents\GitHub\Trees\Trees\obj\Debug\Trees.csprojResolveAssemblyReference.cache
-C:\Users\JohnnyPan\Documents\GitHub\Trees\Trees\bin\Debug\Trees.exe.config
-C:\Users\JohnnyPan\Documents\GitHub\Trees\Trees\obj\Debug\Trees.exe
-C:\Users\JohnnyPan\Documents\GitHub\Trees\Trees\obj\Debug\Trees.pdb

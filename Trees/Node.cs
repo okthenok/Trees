@@ -9,6 +9,7 @@ namespace Trees
     public class Node
     {
         public int item { get; set; }
+        public int height { get; set; }
         public bool ignore { get; set; }
         public Node parent { get; set; }
         public Node left { get; set; }
@@ -17,6 +18,30 @@ namespace Trees
         {
             item = Item;
             ignore = false;
+            height = findHeight();
+        }
+        public int findHeight()
+        {
+            if (this == null)
+            {
+                return 0;
+            }
+            if (left == null && right == null)
+            {
+                return 1;
+            }
+            else if (left != null || right != null)
+            {
+                if (left.height > right.height)
+                {
+                    height = left.height + 1;
+                }
+                else
+                {
+                    height = right.height + 1;
+                }
+            }
+            return height;
         }
     }
 }
