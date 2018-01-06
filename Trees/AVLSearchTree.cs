@@ -14,31 +14,68 @@ namespace Trees
         }
         public override void Insert(Node newNode, Node start, Node parent)
         {
-            start.height = start.findHeight();
             base.Insert(newNode, start, parent);
+            Rotations(newNode);
         }
         public override Node Search(int find, Node start)
         {
-            start.height = start.findHeight();
             return base.Search(find, start);
         }
-        public int Balance(Node unbalanced)
+        public override void Delete(Node delNode)
         {
-            return unbalanced.right.height - unbalanced.left.height;
+            var temp = delNode;
+            if (delNode == head)
+            {
+                temp = head;
+            }
+            base.Delete(delNode);
+            Rotations(temp);
         }
-        public void Rotation (Node unbalanced)
+        public void RightRotation(Node root)
         {
-            //LeftRotation
-            if (Balance(unbalanced) > 1)
+            var temp = root.left;
+            if (root.left.right != null)
             {
-
+                root.left = root.left.right;
             }
-            //RightRotation
-            if (Balance(unbalanced) < -1)
+            root.parent = temp;
+            temp.right = root;
+        }
+        public void LeftRotation (Node root)
+        {
+            var temp = root.right;
+            if (root.right.left != null)
             {
-
+                root.right = root.right.left;
             }
-            //DoubleRotation
+            root.parent = temp;
+            temp.left = root;
+        }
+        public void Rotations(Node child)
+        {
+            var root = child;
+            while (!(root.findBalance() > 1 || root.findBalance() < 1))
+            {
+                root = child.parent;
+            }
+            if (root.left != null && root.left.left != null)
+            {
+                RightRotation(root);
+            }
+            if (root.left != null && root.left.right != null)
+            {
+                LeftRotation(root.left);
+                RightRotation(root);
+            }
+            if (root.right != null && root.right.right != null)
+            {
+                LeftRotation(root);
+            }
+            if (root.right != null && root.right.left != null)
+            {
+                RightRotation(root.right);
+                LeftRotation(root);
+            }
         }
     }
 }

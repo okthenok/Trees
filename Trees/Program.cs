@@ -10,7 +10,7 @@ namespace Trees
     {
         static void Main(string[] args)
         {
-            BinarySearchTree tree = new BinarySearchTree();
+            AVLSearchTree tree = new AVLSearchTree();
             Node node;
             string input;
             int numInput;

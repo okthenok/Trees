@@ -43,5 +43,9 @@ namespace Trees
             }
             return height;
         }
+        public int findBalance()
+        {
+            return right.height - left.height;
+        }
     }
 }

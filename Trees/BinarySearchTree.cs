@@ -68,7 +68,7 @@ namespace Trees
                 Insert(newNode, search.right, search);
             }
         }
-        public void Delete(Node delNode)
+        public virtual void Delete(Node delNode)
         {
             Node target = Search(delNode.item, head);
             Node find = target;
