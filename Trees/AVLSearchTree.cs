@@ -9,7 +9,7 @@ namespace Trees
     public class AVLSearchTree : BinarySearchTree
     {
         public AVLSearchTree()
-            :base()
+            : base()
         {
         }
         public override void Insert(Node newNode, Node start, Node parent)
@@ -41,7 +41,7 @@ namespace Trees
             root.parent = temp;
             temp.right = root;
         }
-        public void LeftRotation (Node root)
+        public void LeftRotation(Node root)
         {
             var temp = root.right;
             if (root.right.left != null)
@@ -53,8 +53,9 @@ namespace Trees
         }
         public void Rotations(Node child)
         {
+            findHeight(head);
             var root = child;
-            while (!(root.findBalance() > 1 || root.findBalance() < 1))
+            while (!(root.balance > 1 || root.balance < 1))
             {
                 root = child.parent;
             }
@@ -76,6 +77,26 @@ namespace Trees
                 RightRotation(root.right);
                 LeftRotation(root);
             }
+        }
+        public int findHeight(Node node)
+        {
+            if (node.left == null && node.right == null)
+            {
+                node.height = 0;
+            }
+            else if(/*only 1 child*/)
+            {
+                node.height = findHeight(/*of that child*/) + 1;
+            }
+            else if (node.left.height > node.right.height)
+            {
+                node.height = findHeight(node.left) + 1;
+            }
+            else if(node.left.height < node.right.height)
+            {
+                node.height = findHeight(node.right) + 1;
+            }
+            return node.height;
         }
     }
 }
