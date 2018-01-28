@@ -12,9 +12,37 @@ namespace Trees
             : base()
         {
         }
-        public override void Insert(Node newNode, Node start, Node parent)
+        new public void Insert(Node newNode, Node start, Node parent)
         {
-            base.Insert(newNode, start, parent);
+            if (head == null)
+            {
+                head = newNode;
+                return;
+            }
+            Node search = start;
+            if (search == null)
+            {
+                search = newNode;
+                search.parent = parent;
+                if (IsLeftChild(search))
+                {
+                    search.parent.left = search;
+                }
+                else
+                {
+                    search.parent.right = search;
+                }
+                return;
+            }
+            if (newNode.item < search.item)
+            {
+                Insert(newNode, search.left, search);
+
+            }
+            else
+            {
+                Insert(newNode, search.right, search);
+            }
             Rotations(newNode);
         }
         public override Node Search(int find, Node start)
@@ -38,7 +66,13 @@ namespace Trees
             {
                 root.left = root.left.right;
             }
+            if (root == head)
+            {
+                head = temp;
+            }
+            temp.parent = root.parent;
             root.parent = temp;
+            root.left = temp.right;
             temp.right = root;
         }
         public void LeftRotation(Node root)
@@ -48,16 +82,23 @@ namespace Trees
             {
                 root.right = root.right.left;
             }
+            if (root == head)
+            {
+                head = temp;
+            }
+            temp.parent = root.parent;
             root.parent = temp;
+            root.right = temp.left;
             temp.left = root;
         }
         public void Rotations(Node child)
         {
             findHeight(head);
+            if (head.balance == 0) { }
             var root = child;
-            while (!(root.balance > 1 || root.balance < 1))
+            while (!(root.balance > 1 || root.balance < -1) && root != head)
             {
-                root = child.parent;
+                root = root.parent;
             }
             if (root.left != null && root.left.left != null)
             {
@@ -80,13 +121,21 @@ namespace Trees
         }
         public int findHeight(Node node)
         {
+            node.height = 1;
             if (node.left == null && node.right == null)
             {
                 node.height = 0;
             }
-            else if(/*only 1 child*/)
+            else if(node.left == null ^ node.right == null)
             {
-                node.height = findHeight(/*of that child*/) + 1;
+                if (node.left != null)
+                {
+                    node.height = findHeight(node.left) + 1;
+                }
+                else if (node.right != null)
+                {
+                    node.height = findHeight(node.right) + 1;
+                }
             }
             else if (node.left.height > node.right.height)
             {
