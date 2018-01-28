@@ -18,3 +18,9 @@ C:\Users\JohnnyPan\Documents\GitHub\Trees\Trees\obj\Debug\Trees.pdb
 C:\Users\JohnnyPan\Documents\GitHub\Trees\Trees\bin\Debug\Trees.exe
 C:\Users\JohnnyPan\Documents\GitHub\Trees\Trees\bin\Debug\Trees.pdb
 C:\Users\JohnnyPan\Documents\GitHub\Trees\Trees\obj\Debug\Trees.csprojResolveAssemblyReference.cache
+C:\Users\VisitorDL2\Desktop\JPanTree\Trees\Trees\bin\Debug\Trees.exe.config
+C:\Users\VisitorDL2\Desktop\JPanTree\Trees\Trees\obj\Debug\Trees.exe
+C:\Users\VisitorDL2\Desktop\JPanTree\Trees\Trees\obj\Debug\Trees.pdb
+C:\Users\VisitorDL2\Desktop\JPanTree\Trees\Trees\bin\Debug\Trees.exe
+C:\Users\VisitorDL2\Desktop\JPanTree\Trees\Trees\bin\Debug\Trees.pdb
+C:\Users\VisitorDL2\Desktop\JPanTree\Trees\Trees\obj\Debug\Trees.csprojResolveAssemblyReference.cache

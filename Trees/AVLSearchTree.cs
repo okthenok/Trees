@@ -32,18 +32,17 @@ namespace Trees
                 {
                     search.parent.right = search;
                 }
+                Rotations(newNode);
                 return;
             }
             if (newNode.item < search.item)
             {
                 Insert(newNode, search.left, search);
-
             }
             else
             {
                 Insert(newNode, search.right, search);
             }
-            Rotations(newNode);
         }
         public override Node Search(int find, Node start)
         {
@@ -88,6 +87,7 @@ namespace Trees
             }
             temp.parent = root.parent;
             root.parent = temp;
+            temp.right = root.right.right;
             root.right = temp.left;
             temp.left = root;
         }
@@ -100,50 +100,66 @@ namespace Trees
             {
                 root = root.parent;
             }
-            if (root.left != null && root.left.left != null)
+            if (root.left != null && root.left.left != null && (root.balance > 1 || root.balance < -1))
             {
                 RightRotation(root);
             }
-            if (root.left != null && root.left.right != null)
+            else if (root.left != null && root.left.right != null && (root.balance > 1 || root.balance < -1))
             {
                 LeftRotation(root.left);
                 RightRotation(root);
             }
-            if (root.right != null && root.right.right != null)
+            else if (root.right != null && root.right.right != null && (root.balance > 1 || root.balance < -1))
             {
                 LeftRotation(root);
             }
-            if (root.right != null && root.right.left != null)
+            else if (root.right != null && root.right.left != null && (root.balance > 1 || root.balance < -1))
             {
                 RightRotation(root.right);
                 LeftRotation(root);
             }
+            findHeight(head);
+            if (head.balance == 0) { }
         }
         public int findHeight(Node node)
         {
+            int leftHeight = 0;
+            int rightHeight = 0;
             node.height = 1;
             if (node.left == null && node.right == null)
             {
-                node.height = 0;
+                return node.height;
             }
-            else if(node.left == null ^ node.right == null)
+            if (node.left != null)
+            {
+                leftHeight = findHeight(node.left);
+            }
+            if (node.right != null)
+            {
+                rightHeight = findHeight(node.right);
+            }
+            if (node.left == null ^ node.right == null)
             {
                 if (node.left != null)
                 {
-                    node.height = findHeight(node.left) + 1;
+                    node.height = leftHeight + 1;
                 }
                 else if (node.right != null)
                 {
-                    node.height = findHeight(node.right) + 1;
+                    node.height = rightHeight + 1;
                 }
             }
-            else if (node.left.height > node.right.height)
+            else if (leftHeight > rightHeight)
             {
-                node.height = findHeight(node.left) + 1;
+                node.height = leftHeight + 1;
             }
-            else if(node.left.height < node.right.height)
+            else if (leftHeight < rightHeight)
             {
-                node.height = findHeight(node.right) + 1;
+                node.height = rightHeight + 1;
+            }
+            else
+            {
+                node.height = leftHeight + 1;
             }
             return node.height;
         }
