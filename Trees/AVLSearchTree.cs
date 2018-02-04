@@ -61,10 +61,6 @@ namespace Trees
         public void RightRotation(Node root)
         {
             var temp = root.left;
-            if (root.left.right != null)
-            {
-                root.left = root.left.right;
-            }
             if (root == head)
             {
                 head = temp;
@@ -77,17 +73,12 @@ namespace Trees
         public void LeftRotation(Node root)
         {
             var temp = root.right;
-            if (root.right.left != null)
-            {
-                root.right = root.right.left;
-            }
             if (root == head)
             {
                 head = temp;
             }
             temp.parent = root.parent;
             root.parent = temp;
-            temp.right = root.right.right;
             root.right = temp.left;
             temp.left = root;
         }
