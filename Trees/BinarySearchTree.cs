@@ -36,7 +36,12 @@ namespace Trees
                 }
             }
         }
-        public virtual void Insert(Node newNode, Node start, Node parent)
+        public virtual void Insert(int input)
+        {
+            Node node = new Node(input);
+            InsertHelper(node, head, null);
+        }
+        public virtual void InsertHelper(Node newNode, Node start, Node parent)
         {
             if (head == null)
             {
@@ -60,12 +65,12 @@ namespace Trees
             }
             if (newNode.item < search.item)
             {
-                Insert(newNode, search.left, search);
+                InsertHelper(newNode, search.left, search);
 
             }
             else
             {
-                Insert(newNode, search.right, search);
+                InsertHelper(newNode, search.right, search);
             }
         }
         public virtual void Delete(Node delNode)
