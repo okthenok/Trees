@@ -12,7 +12,12 @@ namespace Trees
             : base()
         {
         }
-        new public void Insert(Node newNode, Node start, Node parent)
+        new public void Insert(int input)
+        {
+            Node node = new Node(input);
+            InsertHelper(node, head, null);
+        }
+        new public void InsertHelper(Node newNode, Node start, Node parent)
         {
             if (head == null)
             {
@@ -37,11 +42,11 @@ namespace Trees
             }
             if (newNode.item < search.item)
             {
-                Insert(newNode, search.left, search);
+                InsertHelper(newNode, search.left, search);
             }
             else
             {
-                Insert(newNode, search.right, search);
+                InsertHelper(newNode, search.right, search);
             }
         }
         public override Node Search(int find, Node start)
@@ -65,6 +70,10 @@ namespace Trees
             {
                 head = temp;
             }
+            else if (root != head)
+            {
+                root.parent.left = temp;
+            }
             temp.parent = root.parent;
             root.parent = temp;
             root.left = temp.right;
@@ -76,6 +85,10 @@ namespace Trees
             if (root == head)
             {
                 head = temp;
+            }
+            else if (root != head)
+            {
+                root.parent.right = temp;
             }
             temp.parent = root.parent;
             root.parent = temp;
@@ -91,22 +104,22 @@ namespace Trees
             {
                 root = root.parent;
             }
-            if (root.left != null && root.left.left != null && (root.balance > 1 || root.balance < -1))
+            if (root.right != null && root.right.left != null && (root.balance > 1 || root.balance < -1))
             {
-                RightRotation(root);
+                RightRotation(root.right);
+                LeftRotation(root);
             }
             else if (root.left != null && root.left.right != null && (root.balance > 1 || root.balance < -1))
             {
                 LeftRotation(root.left);
                 RightRotation(root);
             }
+            else if (root.left != null && root.left.left != null && (root.balance > 1 || root.balance < -1))
+            {
+                RightRotation(root);
+            }
             else if (root.right != null && root.right.right != null && (root.balance > 1 || root.balance < -1))
             {
-                LeftRotation(root);
-            }
-            else if (root.right != null && root.right.left != null && (root.balance > 1 || root.balance < -1))
-            {
-                RightRotation(root.right);
                 LeftRotation(root);
             }
             findHeight(head);

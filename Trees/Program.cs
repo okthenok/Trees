@@ -37,8 +37,7 @@ namespace Trees
                     Console.WriteLine(tree.IsEmpty());
                     continue;
                 }
-                node = new Node(Convert.ToInt32(input));
-                tree.Insert(node, tree.head, null);
+                tree.Insert(Convert.ToInt32(input));
             }
         }
     }
