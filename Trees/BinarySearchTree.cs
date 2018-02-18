@@ -156,7 +156,7 @@ namespace Trees
             }
             return find.item;
         }
-        public bool IsLeftChild(Node child)
+        public virtual bool IsLeftChild(Node child)
         {
             if (child.item <= child.parent.item)
             {
