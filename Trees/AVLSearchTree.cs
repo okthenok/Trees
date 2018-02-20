@@ -63,67 +63,91 @@ namespace Trees
             base.Delete(delNode);
             Rotations(temp);
         }
-        public void RightRotation(Node root)
+        public void RightRotation(Node currentNode)
         {
-            var temp = root.left;
-            if (root == head)
+            var temp = currentNode.left;
+            if (currentNode == head)
             {
                 head = temp;
             }
-            else if (root != head)
+            else if (currentNode != head)
             {
-                root.parent.left = temp;
+                if (IsLeftChild(currentNode))
+                {
+                    currentNode.parent.left = temp;
+                }
+                else
+                {
+                    currentNode.parent.right = temp;
+                }
             }
-            temp.parent = root.parent;
-            root.parent = temp;
-            root.left = temp.right;
-            temp.right = root;
+            temp.parent = currentNode.parent;
+            currentNode.parent = temp;
+            currentNode.left = temp.right;
+            if (currentNode.left != null)
+            {
+                currentNode.left.parent = currentNode;
+            }
+            temp.right = currentNode;
         }
-        public void LeftRotation(Node root)
+        public void LeftRotation(Node currentNode)
         {
-            var temp = root.right;
-            if (root == head)
+            var temp = currentNode.right;
+            if (currentNode == head)
             {
                 head = temp;
             }
-            else if (root != head)
+            else if (currentNode != head)
             {
-                root.parent.right = temp;
+                if (IsLeftChild(currentNode))
+                {
+                    currentNode.parent.left = temp;
+                }
+                else
+                {
+                    currentNode.parent.right = temp;
+                }
             }
-            temp.parent = root.parent;
-            root.parent = temp;
-            root.right = temp.left;
-            temp.left = root;
+            temp.parent = currentNode.parent;
+            currentNode.parent = temp;
+            currentNode.right = temp.left;
+            if (currentNode.right != null)
+            {
+                currentNode.right.parent = currentNode;
+            }
+            temp.left = currentNode;
         }
         public void Rotations(Node child)
         {
             findHeight(head);
-            if (head.balance == 0) { }
-            var root = child;
-            while (!(root.balance > 1 || root.balance < -1) && root != head)
+            if (head.balance == 0)
+            { }
+            var currentNode = child;
+            while (!(currentNode.balance > 1 || currentNode.balance < -1) && currentNode != head)
             {
-                root = root.parent;
+                currentNode = currentNode.parent;
             }
-            if (root.right != null && root.right.left != null && (root.balance > 1 || root.balance < -1))
+            if (currentNode.right != null && currentNode.right.left != null && (currentNode.balance > 1 || currentNode.balance < -1))
             {
-                RightRotation(root.right);
-                LeftRotation(root);
+                RightRotation(currentNode.right);
+                LeftRotation(currentNode);
             }
-            else if (root.left != null && root.left.right != null && (root.balance > 1 || root.balance < -1))
+            else if (currentNode.left != null && currentNode.left.right != null && (currentNode.balance > 1 || currentNode.balance < -1))
             {
-                LeftRotation(root.left);
-                RightRotation(root);
+                LeftRotation(currentNode.left);
+                RightRotation(currentNode);
             }
-            else if (root.left != null && root.left.left != null && (root.balance > 1 || root.balance < -1))
+            else if (currentNode.left != null && currentNode.left.left != null && (currentNode.balance > 1 || currentNode.balance < -1))
             {
-                RightRotation(root);
+                RightRotation(currentNode);
             }
-            else if (root.right != null && root.right.right != null && (root.balance > 1 || root.balance < -1))
+            else if (currentNode.right != null && currentNode.right.right != null && (currentNode.balance > 1 || currentNode.balance < -1))
             {
-                LeftRotation(root);
+                LeftRotation(currentNode);
             }
             findHeight(head);
-            if (head.balance == 0) { }
+            if (head.balance == 0)
+            { }
         }
         public int findHeight(Node node)
         {
@@ -166,6 +190,10 @@ namespace Trees
                 node.height = leftHeight + 1;
             }
             return node.height;
+        }
+        public override bool IsLeftChild(Node child)
+        {
+            return base.IsLeftChild(child);
         }
     }
 }
