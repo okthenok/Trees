@@ -127,23 +127,23 @@ namespace Trees
             {
                 currentNode = currentNode.parent;
             }
-            if (currentNode.right != null && currentNode.right.left != null && (currentNode.balance > 1 || currentNode.balance < -1))
+            if (currentNode.left != null && currentNode.left.left != null && currentNode.balance < -1)
+            {
+                RightRotation(currentNode);
+            }
+            else if (currentNode.right != null && currentNode.right.right != null && currentNode.balance > 1)
+            {
+                LeftRotation(currentNode);
+            }
+            else if (currentNode.right != null && currentNode.right.left != null && (currentNode.balance < -1 || currentNode.balance > 1))
             {
                 RightRotation(currentNode.right);
                 LeftRotation(currentNode);
             }
-            else if (currentNode.left != null && currentNode.left.right != null && (currentNode.balance > 1 || currentNode.balance < -1))
+            else if (currentNode.left != null && currentNode.left.right != null && (currentNode.balance < -1 || currentNode.balance > 1))
             {
                 LeftRotation(currentNode.left);
                 RightRotation(currentNode);
-            }
-            else if (currentNode.left != null && currentNode.left.left != null && (currentNode.balance > 1 || currentNode.balance < -1))
-            {
-                RightRotation(currentNode);
-            }
-            else if (currentNode.right != null && currentNode.right.right != null && (currentNode.balance > 1 || currentNode.balance < -1))
-            {
-                LeftRotation(currentNode);
             }
             findHeight(head);
             if (head.balance == 0)

@@ -41,17 +41,17 @@ namespace TreesTestProject
             Assert.AreEqual(73, avl.head.right.right.left.item);
             Assert.AreEqual(70, avl.head.right.left.item);
             Assert.AreEqual(71, avl.head.right.left.right.item);
-            Assert.AreEqual(61, avl.head.right.left.left);
-            Assert.AreEqual(13, avl.head.left);
-            Assert.AreEqual(1, avl.head.left.left);
-            Assert.AreEqual(11, avl.head.left.left.right);
-            Assert.AreEqual(47, avl.head.left.right);
-            Assert.AreEqual(29, avl.head.left.right.left);
-            Assert.AreEqual(16, avl.head.left.right.left.left);
-            Assert.AreEqual(32, avl.head.left.right.left.right);
-            Assert.AreEqual(51, avl.head.left.right.right);
-            Assert.AreEqual(60, avl.head.left.right.right.right);
-            Assert.AreEqual(49, avl.head.left.right.right.left);
+            Assert.AreEqual(61, avl.head.right.left.left.item);
+            Assert.AreEqual(13, avl.head.left.item);
+            Assert.AreEqual(1, avl.head.left.left.item);
+            Assert.AreEqual(11, avl.head.left.left.right.item);
+            Assert.AreEqual(47, avl.head.left.right.item);
+            Assert.AreEqual(29, avl.head.left.right.left.item);
+            Assert.AreEqual(16, avl.head.left.right.left.left.item);
+            Assert.AreEqual(32, avl.head.left.right.left.right.item);
+            Assert.AreEqual(51, avl.head.left.right.right.item);
+            Assert.AreEqual(60, avl.head.left.right.right.right.item);
+            Assert.AreEqual(49, avl.head.left.right.right.left.item);
         }
     }
 }

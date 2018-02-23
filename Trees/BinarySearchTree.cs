@@ -158,7 +158,7 @@ namespace Trees
         }
         public virtual bool IsLeftChild(Node child)
         {
-            if (child.item <= child.parent.item)
+            if (child.item < child.parent.item)
             {
                 return true;
             }
