@@ -22,7 +22,7 @@ namespace Trees
                 {
                     Console.WriteLine("Delete a number from the tree");
                     node = new Node(Convert.ToInt32(Console.ReadLine()));
-                    tree.Delete(node);
+                    tree.Delete(node.item);
                     continue;
                 }
                 if (input.Contains("search"))

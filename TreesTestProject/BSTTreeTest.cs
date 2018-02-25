@@ -28,7 +28,7 @@ namespace TreesTestProject
             BinarySearchTree bst = new BinarySearchTree();
             try
             {
-                bst.Delete(null);
+                bst.Delete(0);
                 Assert.Fail("Should not be able to delete a null node");
             }
             catch (NullReferenceException)

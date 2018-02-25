@@ -73,8 +73,9 @@ namespace Trees
                 InsertHelper(newNode, search.right, search);
             }
         }
-        public virtual void Delete(Node delNode)
+        public virtual void Delete(int value)
         {
+            Node delNode = new Node(value);
             Node target = Search(delNode.item, head);
             Node find = target;
             if (target.left == null && target.right == null)
@@ -126,7 +127,7 @@ namespace Trees
                 }
                 target.item = find.item;
                 target.ignore = true;
-                Delete(find);
+                Delete(find.item);
                 target.ignore = false;
             }
         }

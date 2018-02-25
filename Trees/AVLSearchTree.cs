@@ -53,14 +53,15 @@ namespace Trees
         {
             return base.Search(find, start);
         }
-        public override void Delete(Node delNode)
+        public override void Delete(int value)
         {
-            var temp = delNode;
+            Node delNode = new Node(value);
+            var temp = Search(value, head);
             if (delNode == head)
             {
                 temp = head;
             }
-            base.Delete(delNode);
+            base.Delete(delNode.item);
             Rotations(temp);
         }
         public void RightRotation(Node currentNode)
