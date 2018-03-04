@@ -14,6 +14,7 @@ namespace Trees
         public Node parent { get; set; }
         public Node left { get; set; }
         public Node right { get; set; }
+        public bool isRed { get; set; }
         public int balance
         {
             get
