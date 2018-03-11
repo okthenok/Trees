@@ -39,6 +39,7 @@ namespace Trees
         {
             item = Item;
             ignore = false;
+            isRed = true;
         }
     }
 }
