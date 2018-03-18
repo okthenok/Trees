@@ -8,105 +8,98 @@ namespace Trees
 {
     public class RBTree
     {
-        public Node head = null;
+        public RBNode head = null;
         public RBTree()
         {
         }
         public void Insert(int value)
         {
-            Node node = new Node(value);
-            head = InsertHelper(node, head, null);
+            RBNode node = new RBNode(value);
+            head = InsertHelper(node, head);
             head.isRed = false;
         }
-        private Node InsertHelper(Node newNode, Node start, Node parent)
+        private RBNode InsertHelper(RBNode newNode, RBNode search)
         {
-            if (start == null)
+            if (search == null)
             {
-                start = newNode;
-                if (head == null)
-                {
-                    return start;
-                }
-                start.parent = parent;
-                if (IsLeftChild(start))
-                {
-                    start.parent.left = start;
-                }
-                else
-                {
-                    start.parent.right = start;
-                }
-                return start;
+                search = newNode;
+                return search;
             }
 
-            if (IsRed(start.left) && IsRed(start.right))
+            if (IsRed(search.left) && IsRed(search.right))
             {
-                FlipColor(start);
+                FlipColor(search);
             }
 
-            if (start.item > newNode.item)
+            if (newNode.item > search.item)
             {
-                newNode = InsertHelper(newNode, start.right, start);
+                search.right = InsertHelper(newNode, search.right);
             }
-            else if (start.item < newNode.item)
+            else if (newNode.item < search.item)
             {
-                newNode = InsertHelper(newNode, start.left, start);
+                search.left = InsertHelper(newNode, search.left);
             }
             else
             {
-                //figure out what to do when there is a copy
+                throw new ArgumentException("Does not accpet two of the same value");
             }
-
-            if (IsRed(start.right) && !IsRed(start.left))
+            if (IsRed(search.right) && !IsRed(search.left))
             {
-                start = LeftRotation(start);
+                search = LeftRotation(search);
             }
-            if (IsRed(start.left) && IsRed(start.left.left))
+            if (IsRed(search.left) && IsRed(search.left.left))
             {
-                start = RightRotation(start);
+                search = RightRotation(search);
             }
-            return start;
+            return search;
         }
-
-        private Node LeftRotation(Node node)
+        private void Remove(int value)
         {
-            Node temp = node.right;
+            RBNode search = head;
+            while (search.left != null)
+            {
+                if (!IsRed(search.left) && !IsRed(search.left.left))
+                {
+
+                }
+            }
+        }
+        private RBNode LeftRotation(RBNode node)
+        {
+            RBNode temp = node.right;
             node.right = temp.left;
             temp.left = node;
             temp.isRed = node.isRed;
             temp.left.isRed = true;
-            return node;
+            return temp;
         }
-        private Node RightRotation(Node node)
+        private RBNode RightRotation(RBNode node)
         {
-            Node temp = node.left;
+            RBNode temp = node.left;
             node.left = temp.right;
             temp.right = node;
             temp.isRed = node.isRed;
             temp.right.isRed = true;
-            return node;
+            return temp;
         }
-        public void FlipColor(Node node)
+        public RBNode FlipColor(RBNode node)
         {
             node.left.isRed = !node.left.isRed;
             node.isRed = !node.isRed;
             node.right.isRed = !node.right.isRed;
+            return node;
         }
-        public bool IsLeftChild(Node node)
-        {
-            if (node.item < node.parent.item)
-            {
-                return true;
-            }
-            return false;
-        }
-        public bool IsRed(Node node)
+        public bool IsRed (RBNode node)
         {
             if (node == null)
             {
                 return false;
             }
             return node.isRed;
+        }
+        public void FixUp (RBNode node)
+        {
+
         }
     }
 }
