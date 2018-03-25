@@ -9,9 +9,7 @@ namespace Trees
     public class RBTree
     {
         public RBNode head = null;
-        public RBTree()
-        {
-        }
+        public RBTree () {}
         public void Insert(int value)
         {
             RBNode node = new RBNode(value);
@@ -43,14 +41,7 @@ namespace Trees
             {
                 throw new ArgumentException("Does not accpet two of the same value");
             }
-            if (IsRed(search.right) && !IsRed(search.left))
-            {
-                search = LeftRotation(search);
-            }
-            if (IsRed(search.left) && IsRed(search.left.left))
-            {
-                search = RightRotation(search);
-            }
+            LeanLeft(search);
             return search;
         }
         private void Remove(int value)
@@ -58,10 +49,34 @@ namespace Trees
             RBNode search = head;
             while (search.left != null)
             {
-                if (!IsRed(search.left) && !IsRed(search.left.left))
+                if (!IsRed(search.left) && !IsRed(search.left.left) && search.item != value)
                 {
-
+                    MoveRedLeft(search);
                 }
+                else if (search.item == value || )
+            }
+        }
+        private void MoveRedLeft (RBNode node)
+        {
+            FlipColor(node);
+            if (IsRed(node.right.left))
+            {
+                node.right = RightRotation(node.right);
+                node = LeftRotation(node);
+            }
+            FlipColor(node);
+            if (IsRed(node.right.right))
+            {
+                node.right = LeftRotation(node.right);
+            }
+        }
+        private void MoveRedRight (RBNode node)
+        {
+            FlipColor(node);
+            if (IsRed(node.left.left))
+            {
+                node = RightRotation(node);
+                FlipColor(node);
             }
         }
         private RBNode LeftRotation(RBNode node)
@@ -97,9 +112,25 @@ namespace Trees
             }
             return node.isRed;
         }
-        public void FixUp (RBNode node)
+        private void FixUp (RBNode node)
         {
-
+            LeanLeft(node);
+            if (IsRed(node.left) && IsRed(node.right))
+            {
+                FlipColor(node);
+            }
+            LeanLeft(node.left);
+        }
+        private void LeanLeft (RBNode node)
+        {
+            if (IsRed(node.right))
+            {
+                node = LeftRotation(node);
+            }
+            if (!IsRed(node.left) && !IsRed(node.left.left))
+            {
+                node = RightRotation(node);
+            }
         }
     }
 }
