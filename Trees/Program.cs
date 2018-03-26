@@ -18,13 +18,12 @@ namespace Trees
             {
                 Console.WriteLine("Enter a number into the tree");
                 input = Console.ReadLine();
-                //if (input.Contains("delete"))
-                //{
-                //    Console.WriteLine("Delete a number from the tree");
-                //    node = new Node(Convert.ToInt32(Console.ReadLine()));
-                //    tree.Delete(node.item);
-                //    continue;
-                //}
+                if (input.Contains("delete"))
+                {
+                    Console.WriteLine("Delete a number from the tree");
+                    tree.Remove(Convert.ToInt32(Console.ReadLine()));
+                    continue;
+                }
                 //if (input.Contains("search"))
                 //{
                 //    Console.WriteLine("Search for a number in the tree");
