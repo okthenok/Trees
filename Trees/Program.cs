@@ -10,18 +10,18 @@ namespace Trees
     {
         static void Main(string[] args)
         {
-            RBTree tree = new RBTree();
+            RBTree<int> tree = new RBTree<int>();
             Node node;
             string input;
-            int numInput;
+            string numInput;
             while (true)
             {
                 Console.WriteLine("Enter a number into the tree");
                 input = Console.ReadLine();
-                if (input.Contains("delete"))
+                if (Convert.ToString(input).Contains("delete"))
                 {
                     Console.WriteLine("Delete a number from the tree");
-                    tree.Remove(Convert.ToInt32(Console.ReadLine()));
+                    tree.Remove(int.Parse(Console.ReadLine()));
                     continue;
                 }
                 //if (input.Contains("search"))
@@ -36,7 +36,7 @@ namespace Trees
                 //    Console.WriteLine(tree.IsEmpty());
                 //    continue;
                 //}
-                tree.Insert(Convert.ToInt32(input));                
+                tree.Insert(int.Parse(input));               
             }
         }
     }

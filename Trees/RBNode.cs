@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Trees
 {
-    public class RBNode
+    public class RBNode<T>
     {
-        public RBNode left { get; set; }
-        public RBNode right { get; set; }
+        public RBNode<T> left { get; set; }
+        public RBNode<T> right { get; set; }
         public bool isRed { get; set; }
-        public int item { get; set; }
-        public RBNode (int value)
+        public T item { get; set; }
+        public RBNode (T value)
         {
             item = value;
             isRed = true;

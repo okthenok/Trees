@@ -7,22 +7,21 @@ using System.Threading.Tasks;
 namespace Trees
 {
     //generics plz
-    public class RBTree
+    public class RBTree<T> where T:IComparable<T>
     {
-        public RBNode head = null;
-        public RBTree() { }
-        public void Insert(int value)
+        public RBNode<T> head = null;
+        public RBTree () { }
+        public void Insert(T value)
         {
-            RBNode node = new RBNode(value);
+            RBNode<T> node = new RBNode<T>(value);
             head = InsertHelper(node, head);
             head.isRed = false;
         }
-        private RBNode InsertHelper(RBNode newNode, RBNode search)
+        private RBNode<T> InsertHelper(RBNode<T> newNode, RBNode<T> search)
         {
             if (search == null)
             {
-                search = newNode;
-                return search;
+                return newNode;
             }
 
             if (IsRed(search.left) && IsRed(search.right))
@@ -30,11 +29,11 @@ namespace Trees
                 FlipColor(search);
             }
 
-            if (newNode.item > search.item)
+            if (newNode.item.CompareTo(search.item) == 1)
             {
                 search.right = InsertHelper(newNode, search.right);
             }
-            else if (newNode.item < search.item)
+            else if (newNode.item.CompareTo(search.item) == -1)
             {
                 search.left = InsertHelper(newNode, search.left);
             }
@@ -42,10 +41,12 @@ namespace Trees
             {
                 throw new ArgumentException("Does not accept two of the same value");
             }
+
             search = LeanLeft(search);
+      
             return search;
         }
-        public void Remove(int value)
+        public void Remove(T value)
         {
             head = RemoveHelper(value, head);
         }
@@ -56,9 +57,9 @@ namespace Trees
         /// <param name="value">value to be removed</param>
         /// <param name="search"></param>
         /// <returns>the new root of the operation</returns>
-        private RBNode RemoveHelper(int value, RBNode search)
+        private RBNode<T> RemoveHelper(T value, RBNode<T> search)
         {
-            if (value < search.item && search.left != null)
+            if (value.CompareTo(search.item) == -1 && search.left != null)
             {
                 if (!IsRed(search.left) && !IsRed(search.left.left))
                 {
@@ -73,7 +74,7 @@ namespace Trees
                     search = RightRotation(search);
                 }
                 //found leaf value
-                if (value == search.item && search.right == null)
+                if (value.CompareTo(search.item) == 0 && search.right == null)
                 {
                     return null;
                 }
@@ -83,11 +84,11 @@ namespace Trees
                     search = MoveRedRight(search);
                 }
                 //if the value is found as an internal node
-                if (value == search.item && IsRed(search.left))
+                if (value.CompareTo(search.item) == 0 && IsRed(search.left))
                     //copy the candidate value into the current node
                     //recursivly delete the candidate value that was lower in the tree
                 {
-                    RBNode candidate = search.right;
+                    RBNode<T> candidate = search.right;
                     while (candidate.left != null)
                     {
                         candidate = candidate.left;
@@ -101,7 +102,7 @@ namespace Trees
             //fixup
             return FixUp(search);
         }
-        private RBNode MoveRedLeft(RBNode node)
+        private RBNode<T> MoveRedLeft(RBNode<T> node)
         {
             FlipColor(node);
             if (IsRed(node.right.left))
@@ -117,7 +118,7 @@ namespace Trees
 
             return node;
         }
-        private RBNode MoveRedRight(RBNode node)
+        private RBNode<T> MoveRedRight(RBNode<T> node)
         {
             FlipColor(node);
             if (IsRed(node.left.left))
@@ -128,31 +129,31 @@ namespace Trees
 
             return node;
         }
-        private RBNode LeftRotation(RBNode node)
+        private RBNode<T> LeftRotation(RBNode<T> node)
         {
-            RBNode temp = node.right;
+            RBNode<T> temp = node.right;
             node.right = temp.left;
             temp.left = node;
             temp.isRed = node.isRed;
             temp.left.isRed = true;
             return temp;
         }
-        private RBNode RightRotation(RBNode node)
+        private RBNode<T> RightRotation(RBNode<T> node)
         {
-            RBNode temp = node.left;
+            RBNode<T> temp = node.left;
             node.left = temp.right;
             temp.right = node;
             temp.isRed = node.isRed;
             temp.right.isRed = true;
             return temp;
         }
-        public void FlipColor(RBNode node)
+        public void FlipColor(RBNode<T> node)
         {
             node.left.isRed = !node.left.isRed;
             node.isRed = !node.isRed;
             node.right.isRed = !node.right.isRed;
         }
-        public bool IsRed(RBNode node)
+        public bool IsRed(RBNode<T> node)
         {
             if (node == null)
             {
@@ -160,7 +161,7 @@ namespace Trees
             }
             return node.isRed;
         }
-        private RBNode FixUp(RBNode node)
+        private RBNode<T> FixUp(RBNode<T> node)
         {
             node = LeanLeft(node);
             if (IsRed(node.left) && IsRed(node.right))
@@ -171,13 +172,13 @@ namespace Trees
 
             return node;
         }
-        private RBNode LeanLeft(RBNode node)
+        private RBNode<T> LeanLeft(RBNode<T> node)
         {
             if (IsRed(node.right))
             {
                 node = LeftRotation(node);
             }
-            if (!IsRed(node.left) && !IsRed(node.left.left))
+            if (IsRed(node.left) && IsRed(node.left.left))
             {
                 node = RightRotation(node);
             }
