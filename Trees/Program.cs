@@ -11,6 +11,14 @@ namespace Trees
         static void Main(string[] args)
         {
             RBTree<int> tree = new RBTree<int>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                tree.Insert(i);
+            }
+
+            tree.InOrder(tree.head);
+            
             Node node;
             string input;
             string numInput;
@@ -36,7 +44,7 @@ namespace Trees
                 //    Console.WriteLine(tree.IsEmpty());
                 //    continue;
                 //}
-                tree.Insert(int.Parse(input));               
+                tree.Insert(int.Parse(input));
             }
         }
     }

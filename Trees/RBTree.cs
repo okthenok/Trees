@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace Trees
 {
     //generics plz
-    public class RBTree<T> where T:IComparable<T>
+    public class RBTree<T> where T : IComparable<T>
     {
         public RBNode<T> head = null;
-        public RBTree () { }
+        public RBTree() { }
         public void Insert(T value)
         {
             RBNode<T> node = new RBNode<T>(value);
@@ -24,16 +24,11 @@ namespace Trees
                 return newNode;
             }
 
-            if (IsRed(search.left) && IsRed(search.right))
-            {
-                FlipColor(search);
-            }
-
-            if (newNode.item.CompareTo(search.item) == 1)
+            if (newNode.item.CompareTo(search.item) > 0)
             {
                 search.right = InsertHelper(newNode, search.right);
             }
-            else if (newNode.item.CompareTo(search.item) == -1)
+            else if (newNode.item.CompareTo(search.item) < 0)
             {
                 search.left = InsertHelper(newNode, search.left);
             }
@@ -42,8 +37,13 @@ namespace Trees
                 throw new ArgumentException("Does not accept two of the same value");
             }
 
+            if (IsRed(search.left) && IsRed(search.right))
+            {
+                FlipColor(search);
+            }
+
             search = LeanLeft(search);
-      
+
             return search;
         }
         public void Remove(T value)
@@ -59,15 +59,15 @@ namespace Trees
         /// <returns>the new root of the operation</returns>
         private RBNode<T> RemoveHelper(T value, RBNode<T> search)
         {
-            if (value.CompareTo(search.item) == -1 && search.left != null)
+            if (value.CompareTo(search.item) < 0 && search.left != null) //moving left
             {
-                if (!IsRed(search.left) && !IsRed(search.left.left))
+                if (!IsRed(search.left) && !IsRed(search.left.left)) //check if 2 node
                 {
                     search = MoveRedLeft(search);
                 }
                 search.left = RemoveHelper(value, search.left);
             }
-            else
+            else //moving right
             {
                 if (IsRed(search.left))
                 {
@@ -85,8 +85,8 @@ namespace Trees
                 }
                 //if the value is found as an internal node
                 if (value.CompareTo(search.item) == 0 && IsRed(search.left))
-                    //copy the candidate value into the current node
-                    //recursivly delete the candidate value that was lower in the tree
+                //copy the candidate value into the current node
+                //recursivly delete the candidate value that was lower in the tree
                 {
                     RBNode<T> candidate = search.right;
                     while (candidate.left != null)
@@ -168,7 +168,10 @@ namespace Trees
             {
                 FlipColor(node);
             }
-            node = LeanLeft(node.left);
+            if (node.left != null && !IsRed(node.left.left) && IsRed(node.left.right))
+            {
+                node = LeanLeft(node.left);
+            }
 
             return node;
         }
@@ -185,5 +188,53 @@ namespace Trees
 
             return node;
         }
+
+        //BFS (Bread First Search)
+        //For every node
+        //if red, you have 2 black children
+        //is a valid 2-node, left leaning 3-node, or valid 4-node
+
+        public void PreOrder()
+        {
+            PreOrder(head);
+        }
+
+        private void PreOrder(RBNode<T> node)
+        {
+            Console.WriteLine(node.item);
+            if (node.left != null) PreOrder(node.left);
+            if (node.right != null) PreOrder(node.right);
+        }
+
+        public void InOrder(RBNode<T> node)
+        {
+            if (node.left != null) InOrder(node.left);
+            Console.WriteLine(node.item);
+            if (node.right != null) InOrder(node.right);
+        }
+
+        public void PostOrder(RBNode<T> node)
+        {
+            if (node.left != null) PostOrder(node.left);
+            if (node.right != null) PostOrder(node.right);
+            Console.WriteLine(node.item);
+        }
+
+        void NonRecursiveDFS()
+        {
+            Stack<RBNode<T>> stack = new Stack<Trees.RBNode<T>>();
+            stack.Push(head);
+            while (stack.Count != 0)
+            {
+                var node = stack.Pop();
+                Console.WriteLine(node.item);
+                if (node.left != null) stack.Push(node.left);
+                if (node.right != null) stack.Push(node.right);
+            }
+        }
+
+        //Implement Breadth First Search both Recursively and NonRecursive
+
+
     }
 }
