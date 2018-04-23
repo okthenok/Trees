@@ -17,7 +17,7 @@ namespace Trees
                 tree.Insert(i);
             }
 
-            tree.InOrder(tree.head);
+            tree.NonRecursiveBFS();
             
             Node node;
             string input;
@@ -45,6 +45,7 @@ namespace Trees
                 //    continue;
                 //}
                 tree.Insert(int.Parse(input));
+                tree.NonRecursiveBFS();
             }
         }
     }

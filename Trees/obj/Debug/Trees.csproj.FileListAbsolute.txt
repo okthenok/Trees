@@ -36,3 +36,4 @@ C:\Users\VisitorDL5\Desktop\Trees\Trees\Trees\obj\Debug\Trees.pdb
 C:\Users\VisitorDL5\Desktop\Trees\Trees\Trees\bin\Debug\Trees.exe
 C:\Users\VisitorDL5\Desktop\Trees\Trees\Trees\bin\Debug\Trees.pdb
 C:\Users\VisitorDL5\Desktop\Trees\Trees\Trees\obj\Debug\Trees.csprojResolveAssemblyReference.cache
+C:\Users\JohnnyPan\Documents\Github\Trees\Trees\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll

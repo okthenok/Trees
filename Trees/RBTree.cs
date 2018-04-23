@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Trees
 {
-    //generics plz
     public class RBTree<T> where T : IComparable<T>
     {
         public RBNode<T> head = null;
@@ -189,11 +189,36 @@ namespace Trees
             return node;
         }
 
-        //BFS (Bread First Search)
+        //BFS (Breadth First Search)
         //For every node
         //if red, you have 2 black children
         //is a valid 2-node, left leaning 3-node, or valid 4-node
-
+        [TestMethod]
+        public void NonRecursiveBFS()
+        {
+            Queue<RBNode<T>> queue = new Queue<RBNode<T>>();
+            queue.Enqueue(head);
+            while (queue.Count != 0)
+            {
+                var node = queue.Dequeue();
+                if (node != null)
+                {
+                    Console.WriteLine(node.item);
+                    if (IsRed(node))
+                    {
+                        Assert.IsTrue(!IsRed(node.left) && !IsRed(node.right));
+                    }
+                    if (node.left != null)
+                    {
+                        Assert.IsTrue(!IsRed(node.left) && !IsRed(node.left.left) || //2-node
+                            IsRed(node.left) && !IsRed(node.left.left) || //3-node
+                            !IsRed(node) && IsRed(node.left) && IsRed(node.right)); //4-node 
+                    }
+                    if (node.left != null) queue.Enqueue(node.left);
+                    if (node.left != null) queue.Enqueue(node.right);
+                }
+            }
+        }
         public void PreOrder()
         {
             PreOrder(head);
@@ -222,7 +247,7 @@ namespace Trees
 
         void NonRecursiveDFS()
         {
-            Stack<RBNode<T>> stack = new Stack<Trees.RBNode<T>>();
+            Stack<RBNode<T>> stack = new Stack<RBNode<T>>();
             stack.Push(head);
             while (stack.Count != 0)
             {
@@ -232,9 +257,5 @@ namespace Trees
                 if (node.right != null) stack.Push(node.right);
             }
         }
-
-        //Implement Breadth First Search both Recursively and NonRecursive
-
-
     }
 }
