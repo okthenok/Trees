@@ -30,6 +30,7 @@ namespace Trees
                 {
                     Console.WriteLine("Delete a number from the tree");
                     tree.Remove(int.Parse(Console.ReadLine()));
+                    tree.NonRecursiveBFS();
                     continue;
                 }
                 //if (input.Contains("search"))

@@ -10,12 +10,15 @@ namespace Trees
     public class RBTree<T> where T : IComparable<T>
     {
         public RBNode<T> head = null;
+        public int Count { get; private set; }
+
         public RBTree() { }
         public void Insert(T value)
         {
             RBNode<T> node = new RBNode<T>(value);
             head = InsertHelper(node, head);
             head.isRed = false;
+            Count++;
         }
         private RBNode<T> InsertHelper(RBNode<T> newNode, RBNode<T> search)
         {
@@ -49,6 +52,7 @@ namespace Trees
         public void Remove(T value)
         {
             head = RemoveHelper(value, head);
+            Count--;
         }
 
         /// <summary>
@@ -59,9 +63,13 @@ namespace Trees
         /// <returns>the new root of the operation</returns>
         private RBNode<T> RemoveHelper(T value, RBNode<T> search)
         {
+            if (search == null)
+            {
+                return null;
+            }
             if (value.CompareTo(search.item) < 0 && search.left != null) //moving left
             {
-                if (!IsRed(search.left) && !IsRed(search.left.left)) //check if 2 node
+                if (!IsRed(search.left) && !IsRed(search.left.left)) //check if left node is 2 node
                 {
                     search = MoveRedLeft(search);
                 }
@@ -74,15 +82,12 @@ namespace Trees
                     search = RightRotation(search);
                 }
                 //found leaf value
-                if (value.CompareTo(search.item) == 0 && search.right == null)
+                else if (value.CompareTo(search.item) == 0 && search.right == null)
                 {
                     return null;
                 }
                 //if the value is found as an internal node
-                if (value.CompareTo(search.item) == 0 && (search.left != null || search.right != null)) 
-                    //this is supposed to trigger, but it's not supposed to agh
-                    //the logic behind it (left node being red to be internal) is pretty solid
-                    //however, it won't catch the value this way
+                else if (value.CompareTo(search.item) == 0 && (search.left != null || search.right != null))
                 //copy the candidate value into the current node
                 //recursivly delete the candidate value that was lower in the tree
                 {
@@ -203,27 +208,31 @@ namespace Trees
         [TestMethod]
         public void NonRecursiveBFS()
         {
+            if (Count == 0) return;
+
             Queue<RBNode<T>> queue = new Queue<RBNode<T>>();
             queue.Enqueue(head);
             while (queue.Count != 0)
             {
                 var node = queue.Dequeue();
-                if (node != null)
+                Console.WriteLine(node.item);
+
+                if (IsRed(node))
                 {
-                    Console.WriteLine(node.item);
-                    if (IsRed(node))
-                    {
-                        Assert.IsTrue(!IsRed(node.left) && !IsRed(node.right));
-                    }
-                    if (node.left != null)
-                    {
-                        Assert.IsTrue(!IsRed(node.left) && !IsRed(node.left.left) || //2-node
-                            IsRed(node.left) && !IsRed(node.left.left) || //3-node
-                            !IsRed(node) && IsRed(node.left) && IsRed(node.right)); //4-node 
-                    }
-                    if (node.left != null) queue.Enqueue(node.left);
-                    if (node.left != null) queue.Enqueue(node.right);
+                    Assert.IsTrue(!IsRed(node.left) && !IsRed(node.right));
                 }
+                else
+                {
+                    Assert.IsTrue(
+                        (!IsRed(node.left) && !IsRed(node.right)) || //2-node
+                        (IsRed(node.left) && !IsRed(node.right)) || //3-node
+                        (IsRed(node.left) && IsRed(node.right))//4-node 
+                        );
+                }
+
+
+                if (node.left != null) queue.Enqueue(node.left);
+                if (node.right != null) queue.Enqueue(node.right);
             }
         }
         public void PreOrder()
