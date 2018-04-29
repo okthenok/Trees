@@ -78,23 +78,30 @@ namespace Trees
                 {
                     return null;
                 }
-                //if our right node is a 2 node, MoveRedRight
-                if (!IsRed(search.right) && !IsRed(search.right.left))
-                {
-                    search = MoveRedRight(search);
-                }
                 //if the value is found as an internal node
-                if (value.CompareTo(search.item) == 0 && IsRed(search.left))
+                if (value.CompareTo(search.item) == 0 && (search.left != null || search.right != null)) 
+                    //this is supposed to trigger, but it's not supposed to agh
+                    //the logic behind it (left node being red to be internal) is pretty solid
+                    //however, it won't catch the value this way
                 //copy the candidate value into the current node
                 //recursivly delete the candidate value that was lower in the tree
                 {
+                    if (!IsRed(search.right) && !IsRed(search.right.left))
+                    {
+                        search = MoveRedRight(search);
+                    }
                     RBNode<T> candidate = search.right;
                     while (candidate.left != null)
                     {
-                        candidate = candidate.left;
+                        candidate = candidate.left; //bug here i think
                     }
                     search.item = candidate.item;
-                    RemoveHelper(candidate.item, head);
+                    search.right = RemoveHelper(candidate.item, search.right);
+                }
+                //if our right node is a 2 node, MoveRedRight
+                else if (!IsRed(search.right) && search.right != null && !IsRed(search.right.left))
+                {
+                    search = MoveRedRight(search);
                 }
                 //continue right
                 search.right = RemoveHelper(value, search.right);
