@@ -10,14 +10,14 @@ namespace Trees
     {
         static void Main(string[] args)
         {
-            RBTree<int> tree = new RBTree<int>();
+            HeapTree<int> tree = new HeapTree<int>();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 10; i > 0; i--)
             {
                 tree.Insert(i);
             }
 
-            tree.NonRecursiveBFS();
+            //tree.NonRecursiveBFS();
             
             Node node;
             string input;
@@ -28,9 +28,10 @@ namespace Trees
                 input = Console.ReadLine();
                 if (Convert.ToString(input).Contains("delete"))
                 {
-                    Console.WriteLine("Delete a number from the tree");
-                    tree.Remove(int.Parse(Console.ReadLine()));
-                    tree.NonRecursiveBFS();
+                    tree.Pop();
+                    //Console.WriteLine("Delete a number from the tree");
+                    //tree.Remove(int.Parse(Console.ReadLine()));
+                    //tree.NonRecursiveBFS();
                     continue;
                 }
                 //if (input.Contains("search"))
@@ -46,7 +47,7 @@ namespace Trees
                 //    continue;
                 //}
                 tree.Insert(int.Parse(input));
-                tree.NonRecursiveBFS();
+                //tree.NonRecursiveBFS();
             }
         }
     }

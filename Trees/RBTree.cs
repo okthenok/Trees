@@ -229,8 +229,6 @@ namespace Trees
                         (IsRed(node.left) && IsRed(node.right))//4-node 
                         );
                 }
-
-
                 if (node.left != null) queue.Enqueue(node.left);
                 if (node.right != null) queue.Enqueue(node.right);
             }
