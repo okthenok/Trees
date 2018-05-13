@@ -9,18 +9,23 @@ namespace Trees
     public class HeapTree <T> where T : IComparable<T>
     {
         public HeapTree() { }
-        int[] heap = new int[0]; //make it base size 50, and when it runs out of size, add another 50
-        
+        public int[] heap = new int[50]; //make it base size 50, and when it runs out of size, add another 50
+        int count = 0;
         public void Insert(int value)
         {
-            int[] temp = new int[heap.Length + 1];
-            for (int i = 0; i < heap.Length; i++)
+            if (count % 50 == 0)
             {
-                temp[i] = heap[i];
+                var temp = new int[count + 50];
+                for (int i = 0; i < heap.Length; i++)
+                {
+                    temp[i] = heap[i];
+                }
+                heap = temp;
             }
-            heap = temp;
             heap[heap.Length - 1] = value;
             HeapifyUp(heap.Length - 1);
+
+            count++;
         }
         public void HeapifyUp(int value)
         {
@@ -28,18 +33,19 @@ namespace Trees
             {
                 return;
             }
-            if (heap[value] < heap[(value - 1) / 3])
+            if (heap[value] < heap[(value - 1) / 2])
             {
                 var temp = heap[value];
-                heap[value] = heap[(value - 1) / 3];
-                heap[(value - 1) / 3] = temp;
-                HeapifyUp((value - 1) / 3);
+                heap[value] = heap[(value - 1) / 2];
+                heap[(value - 1) / 2] = temp;
+                HeapifyUp((value - 1) / 2);
             }
         }
         public int Pop()
         {
             heap[0] = heap[heap.Length - 1];
             HeapifyDown(0);
+            count--;
             return 0;
         }
         public void HeapifyDown(int value)
@@ -64,6 +70,10 @@ namespace Trees
         }
         public void DFSCheck(int value)
         {
+            if (value * 2 + 1 > count)
+            {
+                return;
+            }
             if (heap[value] > heap[value * 2 + 2] || heap[value] > heap[value * 2 + 1])
             {
                 throw new SystemException("there is a big dumb");

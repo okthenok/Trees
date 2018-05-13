@@ -47,6 +47,7 @@ namespace Trees
                 //    continue;
                 //}
                 tree.Insert(int.Parse(input));
+                tree.DFSCheck(tree.heap[0]);
                 //tree.NonRecursiveBFS();
             }
         }
